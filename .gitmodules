@@ -6,4 +6,4 @@
 	url = https://gitlab.com/ronalfonso/home-ms
 [submodule "auth-ms"]
 	path = auth-ms
-	url = git@gitlab.com:ronalfonso/auth-ms.git
+	url = git@github.com:ronalfonso/auth-ms.git
