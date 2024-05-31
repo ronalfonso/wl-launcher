@@ -20,34 +20,34 @@ services:
       - HOME_MS_HOST="localhost"
       - HOME_MS_PORT=3002
 
-  auth-ms:
-    depends_on:
-      - homes-db
-    build: ./auth-ms
-    volumes:
-      - ./auth-ms/src:/usr/src/app/src
-    command: sh -c "npm run typeorm migration:run && npm run start:dev"
-    environment:
-      - PORT=3003
-      - NATS_SERVERS=nats://nats-server:4222
-      - AUTH_MS_HOST="localhost"
-      - AUTH_MS_PORT=3003
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=23Ron16*
-      - POSTGRES_DB=auth_db
-      - POSTGRES_PORT=5432
-#      - POSTGRES_HOST=44.211.77.154
-      - POSTGRES_HOST=homes-db
-#      - POSTGRES_URI=postgresql://44.211.77.154:5432/home_db
-      - POSTGRES_URI=postgresql://homes-db:5432/auth_db
-      - JWT_SECRET=${JWT_SECRET}
-      - TYPEORM_CONNECTION=postgres
-      - TYPEORM_HOST=homes-db
-      - TYPEORM_USERNAME=root
-      - TYPEORM_PASSWORD=23Ron16*
-      - TYPEORM_DATABASE=auth_db
-      - TYPEORM_PORT=5432
-      - NODE_ENV=dev
+#  auth-ms:
+#    depends_on:
+#      - homes-db
+#    build: ./auth-ms
+#    volumes:
+#      - ./auth-ms/src:/usr/src/app/src
+#    command: sh -c "npm run typeorm migration:run && npm run start:dev"
+#    environment:
+#      - PORT=3003
+#      - NATS_SERVERS=nats://nats-server:4222
+#      - AUTH_MS_HOST="localhost"
+#      - AUTH_MS_PORT=3003
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=23Ron16*
+#      - POSTGRES_DB=auth_db
+#      - POSTGRES_PORT=5432
+##      - POSTGRES_HOST=44.211.77.154
+#      - POSTGRES_HOST=homes-db
+##      - POSTGRES_URI=postgresql://44.211.77.154:5432/home_db
+#      - POSTGRES_URI=postgresql://homes-db:5432/auth_db
+#      - JWT_SECRET=${JWT_SECRET}
+#      - TYPEORM_CONNECTION=postgres
+#      - TYPEORM_HOST=homes-db
+#      - TYPEORM_USERNAME=root
+#      - TYPEORM_PASSWORD=23Ron16*
+#      - TYPEORM_DATABASE=auth_db
+#      - TYPEORM_PORT=5432
+#      - NODE_ENV=dev
 
 #  home-ms:
 #    depends_on:
@@ -76,15 +76,15 @@ services:
 #      - TYPEORM_PORT=5432
 #      - NODE_ENV=dev
 
-  homes-db:
-    container_name: home-database
-    image: postgres:13
-    restart: always
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=23Ron16*
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
-      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+#  homes-db:
+#    container_name: home-database
+#    image: postgres:13
+#    restart: always
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=23Ron16*
+#    ports:
+#      - '5432:5432'
+#    volumes:
+#      - ./postgres_data:/var/lib/postgresql/data
+#      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
