@@ -1,0 +1,9 @@
+[submodule "client-gateway"]
+	path = client-gateway
+	url = https://gitlab.com/ronalfonso/client-gateway
+[submodule "home-ms"]
+	path = home-ms
+	url = https://gitlab.com/ronalfonso/home-ms
+[submodule "auth-ms"]
+	path = auth-ms
+	url = git@gitlab.com:ronalfonso/auth-ms.git

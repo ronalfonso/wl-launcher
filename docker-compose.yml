@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  nats-server:
+    image: nats:latest
+    ports:
+      - "8222:8222"
+
+
+  client-gateway:
+    build: ./client-gateway
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./client-gateway/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3001
+      - NATS_SERVERS=nats://nats-server:4222
+      - HOME_MS_HOST="localhost"
+      - HOME_MS_PORT=3002
+
+  auth-ms:
+    depends_on:
+      - homes-db
+    build: ./auth-ms
+    volumes:
+      - ./auth-ms/src:/usr/src/app/src
+    command: sh -c "npm run typeorm migration:run && npm run start:dev"
+    environment:
+      - PORT=3003
+      - NATS_SERVERS=nats://nats-server:4222
+      - AUTH_MS_HOST="localhost"
+      - AUTH_MS_PORT=3003
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=23Ron16*
+      - POSTGRES_DB=auth_db
+      - POSTGRES_PORT=5432
+#      - POSTGRES_HOST=44.211.77.154
+      - POSTGRES_HOST=homes-db
+#      - POSTGRES_URI=postgresql://44.211.77.154:5432/home_db
+      - POSTGRES_URI=postgresql://homes-db:5432/auth_db
+      - JWT_SECRET=${JWT_SECRET}
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_HOST=homes-db
+      - TYPEORM_USERNAME=root
+      - TYPEORM_PASSWORD=23Ron16*
+      - TYPEORM_DATABASE=auth_db
+      - TYPEORM_PORT=5432
+      - NODE_ENV=dev
+
+#  home-ms:
+#    depends_on:
+#      - homes-db
+#    build: ./home-ms
+#    volumes:
+#      - ./home-ms/src:/usr/src/app/src
+#    command: sh -c "npm run typeorm migration:run && npm run start:dev"
+#    environment:
+#      - PORT=3002
+#      - NATS_SERVERS=nats://nats-server:4222
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=23Ron16*
+#      - POSTGRES_DB=home_db
+#      - POSTGRES_PORT=5432
+##      - POSTGRES_HOST=44.211.77.154
+#      - POSTGRES_HOST=homes-db
+##      - POSTGRES_URI=postgresql://44.211.77.154:5432/home_db
+#      - POSTGRES_URI=postgresql://homes-db:5432/home_db
+#      - JWT_SECRET='Adelfuns the seal the rebellion of the fallen'
+#      - TYPEORM_CONNECTION=postgres
+#      - TYPEORM_HOST=homes-db
+#      - TYPEORM_USERNAME=root
+#      - TYPEORM_PASSWORD=23Ron16*
+#      - TYPEORM_DATABASE=home_db
+#      - TYPEORM_PORT=5432
+#      - NODE_ENV=dev
+
+  homes-db:
+    container_name: home-database
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=23Ron16*
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
