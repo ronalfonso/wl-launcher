@@ -1,6 +1,6 @@
 [submodule "client-gateway"]
 	path = client-gateway
-	url = https://gitlab.com/ronalfonso/client-gateway
+	url = git@github.com:ronalfonso/wl-client-gateway.git
 [submodule "home-ms"]
 	path = home-ms
 	url = https://gitlab.com/ronalfonso/home-ms
