@@ -8,7 +8,7 @@ services:
     build:
       context: ./client-gateway
       dockerfile: dockerfile.prod
-    image: client-gateway-prod
+    image: southamerica-east1-docker.pkg.dev/wl-qa-ms/image-wl-qa/client-gateway
     ports:
       - "3001:3001"
     environment:
@@ -21,7 +21,7 @@ services:
     build:
       context: ./auth-ms
       dockerfile: dockerfile.prod
-    image: auth-ms-prod
+    image: southamerica-east1-docker.pkg.dev/wl-qa-ms/image-wl-qa/auth-ms
     environment:
       - PORT=3003
       - NATS_SERVERS=nats://nats-server:4222
@@ -50,7 +50,7 @@ services:
 #    build:
 #      context: ./home-ms
 #      dockerfile: dockerfile.prod
-#    image: home-ms
+#    image: southamerica-east1-docker.pkg.dev/wl-qa-ms/image-wl-qa/home-ms
 #    environment:
 #      - PORT=3002
 #      - NATS_SERVERS=nats://nats-server:4222
@@ -73,7 +73,7 @@ services:
 
   homes-db:
     container_name: home-database
-    image: postgres:13
+    image: southamerica-east1-docker.pkg.dev/wl-qa-ms/image-wl-qa/postgres:13
     restart: always
     environment:
       - POSTGRES_USER=root
